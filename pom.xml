@@ -11,15 +11,16 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.wildfly-swarm>1.0.0.Alpha5</version.wildfly-swarm>
+        <version.wildfly-swarm>1.0.0.Alpha6</version.wildfly-swarm>
         <version.fabric8>2.2.68</version.fabric8>
         <docker.from>jboss/base-jdk:8</docker.from> 
         <docker.maven.plugin.version>0.13.6</docker.maven.plugin.version>
+        <mysql.version>5.1.37</mysql.version>
         <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
         <docker.image>myfear/swarm-sample-discovery:latest</docker.image>
         
         <!-- uncomment the following two lines when you want to test it locally -->
-        <docker.host>tcp://192.168.99.101:2376</docker.host>
+        <docker.host>tcp://192.168.99.100:2376</docker.host>
         <docker.registry>10.0.2.2:5000</docker.registry>
         
     </properties>
@@ -33,28 +34,24 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>wildfly-swarm-jaxrs-weld</artifactId>
+            <artifactId>jaxrs-weld</artifactId>
             <version>${version.wildfly-swarm}</version>
         </dependency>
-        
         <dependency>
-            <groupId>io.fabric8</groupId>
-            <artifactId>fabric8-cdi</artifactId>
-            <version>${version.fabric8}</version>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jpa</artifactId>
+            <version>${version.wildfly-swarm}</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.0.2.Final</version>
-            <scope>provided</scope>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>datasources</artifactId>
+            <version>${version.wildfly-swarm}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.37</version>
-            
+            <version>${mysql.version}</version> 
         </dependency>
-
     </dependencies>
 
     <build>
@@ -80,6 +77,9 @@
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <version>${version.wildfly-swarm}</version>
+                <configuration>
+                    <mainClass>net.eisele.test.swarm.server.Main</mainClass>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -129,11 +129,19 @@
                     </images>
                     <authConfig>
                         <username>myfear</username>
-                        <password>dV2Dep7vP8pJTxNGk5oNJuqXdPbdznHrxy5_7MZ4KFY</password>
+                        <password>5v7ghsL7IPcLC4ObtgbrkCWkpn_O4Pis4Q7v9bwxI-o</password>
                     </authConfig>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
+   
+    <repositories>
+        <repository>
+            <id>repo1</id>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+   
 </project>
