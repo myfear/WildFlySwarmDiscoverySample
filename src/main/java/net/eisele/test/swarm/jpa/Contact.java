@@ -32,7 +32,7 @@ public class Contact implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer cId;
 
     @Column(length = 40)
     private String name;
@@ -40,12 +40,12 @@ public class Contact implements Serializable {
     public Contact() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getCid() {
+        return cId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCid(Integer id) {
+        this.cId = cId;
     }
 
     public String getName() {
@@ -65,7 +65,7 @@ public class Contact implements Serializable {
             return false;
         }
         Contact that = (Contact) obj;
-        if (that.name.equals(this.name) && that.id == this.id) {
+        if (that.name.equals(this.name) && that.cId == this.cId) {
             return true;
         } else {
             return false;
@@ -74,12 +74,12 @@ public class Contact implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.name);
+        return Objects.hash(this.cId, this.name);
     }
 
     @Override
     public String toString() {
-        return "net.eisele.test.swarm.jpa.Contact[ id=" + id + " ]";
+        return "net.eisele.test.swarm.jpa.Contact[ id=" + cId + " ]";
     }
 
 }

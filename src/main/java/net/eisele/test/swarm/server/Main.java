@@ -6,6 +6,7 @@
 package net.eisele.test.swarm.server;
 
 import net.eisele.test.swarm.jpa.Contact;
+import net.eisele.test.swarm.jpa.PersistenceHelper;
 import net.eisele.test.swarm.sample.ApplicationConfig;
 import net.eisele.test.swarm.sample.CustomerService;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -53,6 +54,7 @@ public class Main {
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/load.sql", Main.class.getClassLoader()), "classes/META-INF/load.sql");
         deployment.addResource(CustomerService.class);
         deployment.addResource(ApplicationConfig.class);
+        deployment.addResource(PersistenceHelper.class);
         deployment.addAllDependencies();
 
         container.deploy(deployment);
