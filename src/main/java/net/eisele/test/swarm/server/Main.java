@@ -52,9 +52,8 @@ public class Main {
         deployment.addClasses(Contact.class);
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/persistence.xml", Main.class.getClassLoader()), "classes/META-INF/persistence.xml");
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/load.sql", Main.class.getClassLoader()), "classes/META-INF/load.sql");
-        deployment.addResource(CustomerService.class);
-        deployment.addResource(ApplicationConfig.class);
-        deployment.addResource(PersistenceHelper.class);
+        deployment.addPackage("net.eisele.test.swarm.jpa");
+        deployment.addPackage("net.eisele.test.swarm.sample");
         deployment.addAllDependencies();
 
         container.deploy(deployment);
