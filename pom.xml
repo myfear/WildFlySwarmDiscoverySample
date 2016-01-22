@@ -10,8 +10,9 @@
     <name>swarm-discovery-example</name>
 
 
-  <modules>
-    <module>swarm-customer</module>
-  </modules>
+    <modules>
+        <module>swarm-customer</module>
+        <module>swarm-order</module>
+    </modules>
   
 </project>

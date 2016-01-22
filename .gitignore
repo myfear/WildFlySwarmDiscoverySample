@@ -60,3 +60,5 @@ $RECYCLE.BIN/
 /target/
 .kube/config
 /swarm-customer/target/
+/swarm-customer - Copy/target/
+/swarm-order/target/

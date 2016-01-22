@@ -1,0 +1,52 @@
+  {
+        "apiVersion" : "v1",
+        "kind" : "ReplicationController",
+        "metadata" : {
+          "labels" : {
+            "name" : "mysql-order"
+          },
+          "name" : "mysql-order"
+        },
+        "spec" : {
+          "replicas" : 1,
+          "selector" : {    
+            "name" : "mysql-order"
+          },
+          "template" : {
+            "metadata" : {
+              "labels" : {
+                "name" : "mysql-order"
+              }
+            },
+            "spec" : {
+              "containers" : [ {
+                "image" : "mysql",
+                "imagePullPolicy" : "IfNotPresent",
+                "name" : "mysql-order",
+                "ports" : [ {
+                  "containerPort" : 3306,
+                  "name" : "mysql-order"
+                    } ],
+ "env": [
+                  {
+                    "name": "MYSQL_USER",
+                    "value": "${MYSQL_USER}"
+                  },
+				  {
+                    "name": "MYSQL_ROOT_PASSWORD",
+                    "value": "root"
+                  },
+                  {
+                    "name": "MYSQL_PASSWORD",
+                    "value": "${MYSQL_PASSWORD}"
+                  },
+                  {
+                    "name": "MYSQL_DATABASE",
+                    "value": "${MYSQL_DATABASE}"
+                  }
+                ]					
+            }]
+          }
+        }
+      }
+    }

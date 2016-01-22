@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <parent>
+        <groupId>net.eisele.test</groupId>
+        <artifactId>swarm-discovery-example</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <artifactId>swarm-order</artifactId>
+
+    <name>swarm-order</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.wildfly-swarm>1.0.0.Alpha6</version.wildfly-swarm>
+        <version.fabric8>2.2.88</version.fabric8>
+        <docker.from>jboss/base-jdk:8</docker.from> 
+        <docker.maven.plugin.version>0.13.6</docker.maven.plugin.version>
+        <mysql.version>5.1.37</mysql.version>
+        <docker.assemblyDescriptorRef>artifact</docker.assemblyDescriptorRef>
+        <docker.image>myfear/swarm-order:latest</docker.image>
+        
+        <!-- uncomment the following two lines when you want to test it locally -->
+        <docker.host>tcp://192.168.99.100:2376</docker.host>
+        <docker.registry>10.0.2.2:5000</docker.registry>
+        
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jaxrs-weld</artifactId>
+            <version>${version.wildfly-swarm}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>jpa</artifactId>
+            <version>${version.wildfly-swarm}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.swarm</groupId>
+            <artifactId>datasources</artifactId>
+            <version>${version.wildfly-swarm}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration> 
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>wildfly-swarm-plugin</artifactId>
+                <version>${version.wildfly-swarm}</version>
+                <configuration>
+                    <mainClass>net.eisele.test.swarm.server.Main</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions> 
+            </plugin>
+            <plugin>
+                <groupId>org.jolokia</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${docker.maven.plugin.version}</version>
+                <configuration>
+                    <images>
+                        <image>
+                            <name>${docker.image}</name>
+                            <build>
+                                <from>${docker.from}</from>
+                                <maintainer>markus@jboss.org</maintainer>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                                <entryPoint>
+                                    <exec>
+                                        <arg>java</arg>
+                                        <arg>-jar</arg>
+                                        <arg>/opt/wildfly-swarm/swarm-order.jar</arg>
+                                    </exec>
+                                </entryPoint>
+                                <assembly>
+                                    <inline>
+                                        <dependencySets>
+                                            <dependencySet>
+                                                <useProjectAttachments>true</useProjectAttachments>
+                                                <includes>
+                                                    <include>net.eisele.test:swarm-order:jar:swarm</include>
+                                                </includes>
+                                                <outputFileNameMapping>swarm-order.jar</outputFileNameMapping>
+                                            </dependencySet>
+                                        </dependencySets>
+                                    </inline>
+                                    <user>jboss:jboss:jboss</user>
+                                    <basedir>/opt/wildfly-swarm</basedir>  
+                                </assembly>
+                            </build>
+                        </image>
+                    </images>
+                    <authConfig>
+                        <username>myfear</username>
+                        <password>_jXdw7_-JEY4v1JhJS09a_PYeIYIodFCmKvsaQt4ZLM</password>
+                    </authConfig>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+   
+    <repositories>
+        <repository>
+            <id>repo1</id>
+            <layout>default</layout>
+            <url>http://repo1.maven.org/maven2</url>
+        </repository>
+    </repositories>
+   
+</project>
