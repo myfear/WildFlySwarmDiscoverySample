@@ -19,11 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "ORDERS")
 @NamedQueries({
-    @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o"),
-    @NamedQuery(name = "Order.findById", query = "SELECT o FROM Order o WHERE o.oId = :oId")
+    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
+    @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.oId = :oId")
 })
 @XmlRootElement
-public class Order implements Serializable {
+public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -33,7 +33,7 @@ public class Order implements Serializable {
     @Column(length = 40)
     private String name;
 
-    public Order() {
+    public Orders() {
     }
 
     public Integer getOid() {
@@ -57,10 +57,10 @@ public class Order implements Serializable {
         if (null == obj) {
             return false;
         }
-        if (!(obj instanceof Order)) {
+        if (!(obj instanceof Orders)) {
             return false;
         }
-        Order that = (Order) obj;
+        Orders that = (Orders) obj;
         if (that.name.equals(this.name) && Objects.equals(that.oId, this.oId)) {
             return true;
         } else {

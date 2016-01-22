@@ -1,6 +1,6 @@
 package net.eisele.test.swarm.server;
 
-import net.eisele.test.swarm.jpa.Order;
+import net.eisele.test.swarm.jpa.Orders;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.wildfly.swarm.container.Container;
@@ -24,9 +24,9 @@ public class Main {
                     d.xaDatasourceClass("com.mysql.jdbc.jdbc2.optional.MysqlXADataSource");
                     d.driverModuleName("com.mysql");
                 })
-                .dataSource("OrderDS", (ds) -> {
+                .dataSource("OrdersDS", (ds) -> {
                     ds.driverName("com.mysql");
-                    ds.connectionUrl("jdbc:mysql://mysql-order:3306/order?createDatabaseIfNotExist=true");
+                    ds.connectionUrl("jdbc:mysql://mysql-order:3306/orders?createDatabaseIfNotExist=true");
                     ds.userName("root");
                     ds.password("root");
                 })
@@ -35,13 +35,13 @@ public class Main {
         // Prevent JPA Fraction from installing it's default datasource fraction
         container.fraction(new JPAFraction()
                 .inhibitDefaultDatasource()
-                .defaultDatasource("jboss/datasources/OrderDS")
+                .defaultDatasource("jboss/datasources/OrdersDS")
         );
 
         container.start();
 
         JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
-        deployment.addClasses(Order.class);
+        deployment.addClasses(Orders.class);
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/persistence.xml", Main.class.getClassLoader()), "classes/META-INF/persistence.xml");
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/load.sql", Main.class.getClassLoader()), "classes/META-INF/load.sql");
         deployment.addPackage("net.eisele.test.swarm.jpa");

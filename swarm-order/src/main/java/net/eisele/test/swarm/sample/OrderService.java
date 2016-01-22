@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import net.eisele.test.swarm.jpa.Order;
+import net.eisele.test.swarm.jpa.Orders;
 import net.eisele.test.swarm.jpa.PersistenceHelper;
 
 /**
@@ -27,14 +27,14 @@ public class OrderService {
     @GET()
     @Path("all")
     @Produces("application/json")
-    public Order[] getAll() {
-        return helper.getEntityManager().createNamedQuery("Order.findAll", Order.class).getResultList().toArray(new Order[0]);
+    public Orders[] getAll() {
+        return helper.getEntityManager().createNamedQuery("Orders.findAll", Orders.class).getResultList().toArray(new Orders[0]);
     }
 
     @GET()
     @Path("byId")
     @Produces("application/json")
-    public Order[] getbyId(@QueryParam("oid") String oid) {
-        return helper.getEntityManager().createNamedQuery("Order.findById", Order.class).setParameter("oId", new Integer(oid)).getResultList().toArray(new Order[0]);
+    public Orders[] getbyId(@QueryParam("oid") String oid) {
+        return helper.getEntityManager().createNamedQuery("Orders.findById", Orders.class).setParameter("oId", new Integer(oid)).getResultList().toArray(new Orders[0]);
     }
 }
