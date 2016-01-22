@@ -59,3 +59,4 @@ $RECYCLE.BIN/
 *.lnk
 /target/
 .kube/config
+/swarm-customer/target/

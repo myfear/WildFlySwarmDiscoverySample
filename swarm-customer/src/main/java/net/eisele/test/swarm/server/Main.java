@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.eisele.test.swarm.server;
 
 import net.eisele.test.swarm.jpa.Contact;
-import net.eisele.test.swarm.jpa.PersistenceHelper;
-import net.eisele.test.swarm.sample.ApplicationConfig;
-import net.eisele.test.swarm.sample.CustomerService;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.wildfly.swarm.container.Container;
@@ -34,7 +26,7 @@ public class Main {
                 })
                 .dataSource("CustomerDS", (ds) -> {
                     ds.driverName("com.mysql");
-                    ds.connectionUrl("jdbc:mysql://mysql:3306/customer?createDatabaseIfNotExist=true");
+                    ds.connectionUrl("jdbc:mysql://mysql-customer:3306/customer?createDatabaseIfNotExist=true");
                     ds.userName("root");
                     ds.password("root");
                 })

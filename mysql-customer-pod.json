@@ -3,29 +3,29 @@
         "kind" : "ReplicationController",
         "metadata" : {
           "labels" : {
-            "name" : "mysql"
+            "name" : "mysql-customer"
           },
-          "name" : "mysql"
+          "name" : "mysql-customer"
         },
         "spec" : {
           "replicas" : 1,
           "selector" : {    
-            "name" : "mysql"
+            "name" : "mysql-customer"
           },
           "template" : {
             "metadata" : {
               "labels" : {
-                "name" : "mysql"
+                "name" : "mysql-customer"
               }
             },
             "spec" : {
               "containers" : [ {
                 "image" : "mysql",
                 "imagePullPolicy" : "IfNotPresent",
-                "name" : "mysql",
+                "name" : "mysql-customer",
                 "ports" : [ {
                   "containerPort" : 3306,
-                  "name" : "mysql"
+                  "name" : "mysql-customer"
                     } ],
  "env": [
                   {

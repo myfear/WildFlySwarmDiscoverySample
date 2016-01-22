@@ -24,7 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "CONTACT")
 @NamedQueries({
-    @NamedQuery(name = "Contact.findAll", query = "SELECT e FROM Contact e")
+    @NamedQuery(name = "Contact.findAll", query = "SELECT e FROM Contact e"),
+    @NamedQuery(name = "Contact.findById", query = "SELECT e FROM Contact e WHERE e.cId = :cId")
 })
 @XmlRootElement
 public class Contact implements Serializable {
@@ -65,7 +66,7 @@ public class Contact implements Serializable {
             return false;
         }
         Contact that = (Contact) obj;
-        if (that.name.equals(this.name) && that.cId == this.cId) {
+        if (that.name.equals(this.name) && Objects.equals(that.cId, this.cId)) {
             return true;
         } else {
             return false;

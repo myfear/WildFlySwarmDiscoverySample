@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import net.eisele.test.swarm.jpa.Contact;
@@ -23,10 +24,17 @@ public class CustomerService {
     @Inject
     PersistenceHelper helper;
 
-    @GET
+    @GET()
+    @Path("all")
     @Produces("application/json")
-    public Contact[] get() {
+    public Contact[] getAll() {
         return helper.getEntityManager().createNamedQuery("Contact.findAll", Contact.class).getResultList().toArray(new Contact[0]);
     }
 
+    @GET()
+    @Path("byId")
+    @Produces("application/json")
+    public Contact[] getbyId(@QueryParam("cid") String cid) {
+        return helper.getEntityManager().createNamedQuery("Contact.findById", Contact.class).setParameter("cId", new Integer(cid)).getResultList().toArray(new Contact[0]);
+    }
 }
